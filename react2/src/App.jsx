@@ -2,12 +2,15 @@ import { useState } from 'react';
 
 function App() {
   const [isSpoilerShown, setIsSpoilerShown] = useState(false);
-  const [isButtonShown, setIsButtonShown] = useState(true);
+  const [isWarningShown, setIsWarningShown] = useState(true);
 
-  function handleClick() {
+  function handleShowSpoilerClick() {
     setIsSpoilerShown(true);
-    setIsButtonShown(false);
-    console.log('handleClick');
+    setIsWarningShown(false);
+  }
+
+  function handleCloseWarningClick() {
+    setIsWarningShown(false);
   }
 
   console.log('App render');
@@ -16,12 +19,19 @@ function App() {
       <h1>gwiezdne wojny V</h1>
       <h2>Data produkcji: 1988</h2>
       <h2>Fabuła</h2>
+      {isWarningShown && (
+        <p>
+          Uwaga opis fabuły zawiera spoiler!
+          <button onClick={handleCloseWarningClick}>X</button>
+        </p>
+      )}
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, fuga?
       </p>
-      {isButtonShown && <button onClick={handleClick}>Pokaż spoiler</button>}
-      {isSpoilerShown && (
+      {isSpoilerShown ? (
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+      ) : (
+        <button onClick={handleShowSpoilerClick}>Pokaż spoiler</button>
       )}
     </>
   );
