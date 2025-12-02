@@ -13,7 +13,7 @@ function App() {
     setState((prevState) => ({
       ...prevState,
       isWarningShown: false,
-      isSpoilerShown,
+      isSpoilerShown: true,
     }));
   }
 
