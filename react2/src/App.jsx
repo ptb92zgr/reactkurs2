@@ -1,25 +1,38 @@
 import { useState } from 'react';
 
+const initialState = {
+  isSpoilerShown: false,
+  isWarningShown: true,
+  numberOfLikes: 50,
+};
+
 function App() {
-  const [isSpoilerShown, setIsSpoilerShown] = useState(false);
-  const [isWarningShown, setIsWarningShown] = useState(true);
-  const [numberOfLikes, setNumberOfLikes] = useState(50);
+  const [state, setState] = useState(initialState);
 
   function handleShowSpoilerClick() {
-    setIsSpoilerShown(true);
-    setIsWarningShown(false);
+    setState((prevState) => ({
+      ...prevState,
+      isWarningShown: false,
+      isSpoilerShown,
+    }));
   }
 
   function handleCloseWarningClick() {
-    setIsWarningShown(false);
+    setState((prevState) => ({ ...prevState, isWarningShown: false }));
   }
 
   function handleLikeButtonClick() {
-    setNumberOfLikes((previousNumberOfLikes) => previousNumberOfLikes + 1);
+    setState((prevState) => ({
+      ...prevState,
+      numberOfLikes: prevState.numberOfLikes + 1,
+    }));
   }
 
   function handleLoveButtonClick() {
-    setNumberOfLikes((previousNumberOfLikes) => previousNumberOfLikes + 3);
+    setState((prevState) => ({
+      ...prevState,
+      numberOfLikes: prevState.numberOfLikes + 3,
+    }));
   }
 
   console.log('App render');
@@ -27,11 +40,11 @@ function App() {
     <>
       <h1>gwiezdne wojny V</h1>
       <h2>Data produkcji: 1988</h2>
-      <h2>Liczba polubień:{numberOfLikes}</h2>
+      <h2>Liczba polubień:{state.numberOfLikes}</h2>
       <button onClick={handleLikeButtonClick}>Lubię to!</button>
       <button onClick={handleLoveButtonClick}>Kocham to!</button>
       <h2>Fabuła</h2>
-      {isWarningShown && (
+      {state.isWarningShown && (
         <p>
           Uwaga opis fabuły zawiera spoiler!
           <button onClick={handleCloseWarningClick}>X</button>
@@ -40,7 +53,7 @@ function App() {
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, fuga?
       </p>
-      {isSpoilerShown ? (
+      {state.isSpoilerShown ? (
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       ) : (
         <button onClick={handleShowSpoilerClick}>Pokaż spoiler</button>
